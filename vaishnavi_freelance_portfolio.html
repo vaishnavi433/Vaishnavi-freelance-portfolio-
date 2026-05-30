@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaishnavi Rathod • AI Automation & GTM Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --forest: #2d3d28;
+            --forest-dark: #1a2416;
+            --forest-mid: #243620;
+            --cream: #fffef2;
+            --off-white: #f5f4e8;
+            --sketch-black: #1a1a1a;
+            --sketch-gray: #555555;
+            --accent: #7aad6a;
+            --accent-light: #b0cc9e;
+        }
+        body {
+            font-family: 'Crimson Text', serif;
+            background: var(--forest-dark);
+            color: var(--cream);
+            overflow-x: hidden;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="10" cy="10" r="7" fill="none" stroke="%23fffef2" stroke-width="2"/><circle cx="10" cy="10" r="2" fill="%23fffef2"/></svg>') 10 10, auto;
+        }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--forest-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%25" height="100%25" filter="url(%23n)" opacity="0.04"/></svg>');
+            pointer-events: none; z-index: 1000; opacity: 0.5;
+        }
+
+        /* ── OPENING ── */
+        .opening-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: var(--forest-dark);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 1.2s ease, transform 1.2s ease;
+        }
+        .opening-screen.hidden { opacity: 0; transform: scale(1.04); pointer-events: none; }
+        .open-eyebrow { font-family:'Crimson Text',serif; font-size:12px; letter-spacing:7px; text-transform:uppercase; opacity:.45; margin-bottom:28px; animation: riseUp 1s ease both; }
+        .open-name { font-family:'Italiana',serif; font-size:clamp(56px,11vw,140px); color:var(--cream); letter-spacing:2px; line-height:1; text-align:center; margin-bottom:18px; animation: riseUp 1s .2s ease both; }
+        .open-title { font-family:'Playfair Display',serif; font-size:clamp(15px,2.2vw,22px); color:var(--accent-light); font-style:italic; margin-bottom:64px; animation: riseUp 1s .4s ease both; }
+        .enter-btn {
+            padding:17px 52px; background:transparent; border:1.5px solid var(--cream); color:var(--cream);
+            font-family:'Crimson Text',serif; font-size:15px; cursor:pointer; transition:color .4s;
+            letter-spacing:4px; text-transform:uppercase; position:relative; overflow:hidden;
+            animation: riseUp 1s .6s ease both;
+        }
+        .enter-btn::before { content:''; position:absolute; top:50%; left:50%; width:0; height:0; background:var(--cream); border-radius:50%; transform:translate(-50%,-50%); transition:width .55s, height .55s; }
+        .enter-btn:hover::before { width:500px; height:500px; }
+        .enter-btn:hover { color:var(--forest-dark); }
+        .enter-btn span { position:relative; z-index:1; }
+        @keyframes riseUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+
+        /* ── NAV ── */
+        .nav { position:fixed; top:0; left:0; right:0; z-index:500; padding:22px 44px; display:flex; justify-content:space-between; align-items:center; background:linear-gradient(to bottom,rgba(26,36,22,.95),transparent); }
+        .nav-logo { font-family:'Italiana',serif; font-size:22px; letter-spacing:2px; }
+        .nav-links { display:flex; gap:30px; }
+        .nav-link { font-family:'Crimson Text',serif; font-size:14px; letter-spacing:2px; text-transform:uppercase; opacity:.65; text-decoration:none; color:var(--cream); transition:opacity .2s; }
+        .nav-link:hover { opacity:1; }
+
+        /* ── SKETCH BG ── */
+        .sketch-container { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1; }
+        .sk { position:absolute; opacity:.1; stroke:var(--cream); fill:none; stroke-width:1.5; animation:skFloat 22s ease-in-out infinite; }
+        @keyframes skFloat {
+            0%,100% { transform:translate(0,0) rotate(0deg); }
+            25% { transform:translate(18px,-28px) rotate(4deg); }
+            50% { transform:translate(-14px,18px) rotate(-3deg); }
+            75% { transform:translate(26px,12px) rotate(2deg); }
+        }
+
+        /* ── CONTENT ── */
+        .content-wrapper { position:relative; z-index:2; padding-top:100vh; }
+
+        /* ── CHAPTER ── */
+        .chapter { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:110px 44px; position:relative; }
+        .chapter-num { position:absolute; top:38px; left:44px; font-family:'Italiana',serif; font-size:20px; opacity:.35; letter-spacing:4px; }
+        .chapter-title { font-family:'Italiana',serif; font-size:clamp(52px,9vw,148px); text-align:center; line-height:.9; letter-spacing:-2px; margin-bottom:38px; }
+        .hl { position:relative; display:inline-block; }
+        .hl::after { content:''; position:absolute; bottom:8px; left:-8px; right:-8px; height:16px; background:var(--accent); opacity:.22; transform:skewY(-2deg); }
+        .chapter-sub { font-family:'Playfair Display',serif; font-size:clamp(17px,2.4vw,27px); text-align:center; font-style:italic; opacity:.82; max-width:680px; margin:0 auto; line-height:1.65; }
+
+        /* ── SECTION SHARED ── */
+        .light-section { background:var(--cream); color:var(--sketch-black); padding:130px 44px; }
+        .off-section { background:var(--off-white); color:var(--sketch-black); padding:130px 44px; }
+        .dark-section { background:var(--forest-dark); padding:120px 44px; }
+        .mid-section { background:var(--forest-mid); padding:120px 44px; }
+        .container { max-width:1200px; margin:0 auto; }
+        .container-lg { max-width:1340px; margin:0 auto; }
+        .section-big-title { font-family:'Italiana',serif; font-size:clamp(46px,7vw,108px); text-align:center; margin-bottom:70px; }
+        .section-intro { font-family:'Playfair Display',serif; font-size:clamp(22px,3.2vw,42px); font-style:italic; line-height:1.45; text-align:center; margin-bottom:70px; }
+
+        /* ── SERVICES GRID ── */
+        .services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:28px; margin-top:50px; }
+        .svc-card { padding:46px 38px; background:white; position:relative; transition:all .4s; box-shadow:0 5px 22px rgba(0,0,0,.07); border-bottom:3px solid transparent; overflow:hidden; }
+        .svc-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:var(--forest); transform:scaleX(0); transition:transform .4s; }
+        .svc-card:hover::before { transform:scaleX(1); }
+        .svc-card:hover { transform:translateY(-8px); box-shadow:0 20px 50px rgba(45,61,40,.16); }
+        .svc-icon { margin-bottom:18px; line-height:1; }
+        .svc-name { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; margin-bottom:12px; }
+        .svc-desc { font-size:16px; line-height:1.78; color:var(--sketch-gray); margin-bottom:18px; }
+        .svc-tools { display:flex; flex-wrap:wrap; gap:7px; }
+        .tool-tag { padding:4px 11px; background:var(--off-white); font-size:11px; letter-spacing:1px; font-family:'Crimson Text',serif; }
+
+        /* ── NETWORK SECTION ── */
+        .network-banner { background:var(--forest); color:var(--cream); padding:90px 44px; text-align:center; position:relative; overflow:hidden; }
+        .network-banner::before { content:''; position:absolute; top:-40px; left:-40px; right:-40px; bottom:-40px; background:radial-gradient(ellipse at center, rgba(122,173,106,.15) 0%, transparent 70%); pointer-events:none; }
+        .network-eyebrow { font-family:'Crimson Text',serif; font-size:12px; letter-spacing:6px; text-transform:uppercase; opacity:.55; margin-bottom:20px; }
+        .network-title { font-family:'Italiana',serif; font-size:clamp(36px,5vw,72px); margin-bottom:24px; line-height:1; }
+        .network-body { font-family:'Playfair Display',serif; font-size:clamp(17px,2vw,24px); font-style:italic; opacity:.88; max-width:760px; margin:0 auto 50px; line-height:1.65; }
+        .network-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; max-width:1000px; margin:0 auto; }
+        .network-card { background:rgba(255,254,242,.07); border:1px solid rgba(255,254,242,.18); padding:32px 28px; transition:all .35s; text-align:left; }
+        .network-card:hover { background:rgba(255,254,242,.13); transform:translateY(-5px); }
+        .network-card-icon { margin-bottom:14px; line-height:1; }
+        .network-card-name { font-family:'Playfair Display',serif; font-size:18px; font-weight:700; margin-bottom:8px; }
+        .network-card-desc { font-size:14px; line-height:1.65; opacity:.75; }
+        .network-note { font-family:'Crimson Text',serif; font-size:15px; opacity:.55; margin-top:40px; font-style:italic; }
+
+        /* ── SKILLS ── */
+        .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:30px; }
+        .skill-box { padding:42px 36px; background:white; position:relative; transition:all .4s; box-shadow:0 4px 18px rgba(0,0,0,.06); }
+        .skill-box::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--forest); transform:scaleX(0); transition:transform .4s; }
+        .skill-box:hover::before { transform:scaleX(1); }
+        .skill-box:hover { transform:translateY(-7px); box-shadow:0 16px 42px rgba(45,61,40,.13); }
+        .skill-cat { font-family:'Italiana',serif; font-size:21px; margin-bottom:20px; color:var(--forest); }
+        .skill-items { display:flex; flex-wrap:wrap; gap:9px; }
+        .skill-item { padding:7px 14px; background:var(--off-white); border:1.5px solid transparent; font-size:13px; transition:all .3s; font-family:'Crimson Text',serif; }
+        .skill-item:hover { border-color:var(--forest); background:white; transform:scale(1.04); }
+
+        /* ── METRICS ── */
+        .metrics-content { max-width:1000px; margin:0 auto; text-align:center; }
+        .metrics-big { font-family:'Italiana',serif; font-size:clamp(48px,8vw,118px); line-height:.95; margin-bottom:36px; }
+        .metrics-quote { font-family:'Playfair Display',serif; font-size:clamp(19px,2.8vw,34px); font-style:italic; line-height:1.55; margin-bottom:75px; opacity:.88; max-width:800px; margin-left:auto; margin-right:auto; }
+        .metrics-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:48px; margin-top:75px; }
+        .metric-num { font-family:'Italiana',serif; font-size:clamp(42px,5.5vw,76px); display:block; line-height:1; margin-bottom:10px; }
+        .metric-lbl { font-family:'Crimson Text',serif; font-size:13px; opacity:.7; letter-spacing:2px; text-transform:uppercase; }
+
+        /* ── GAME ── */
+        .game-container { max-width:660px; margin:0 auto; text-align:center; }
+        .game-title { font-family:'Italiana',serif; font-size:clamp(34px,5vw,68px); margin-bottom:18px; }
+        .game-desc { font-family:'Playfair Display',serif; font-size:17px; font-style:italic; margin-bottom:46px; opacity:.82; }
+        .game-board { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; max-width:480px; margin:0 auto 38px; }
+        .game-card { aspect-ratio:1; background:rgba(255,254,242,.07); border:1.5px solid rgba(255,254,242,.22); border-radius:7px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:13px; font-family:"Crimson Text",serif; letter-spacing:1px; text-transform:uppercase; transition:all .3s; }
+        .game-card:hover { background:rgba(255,254,242,.14); transform:scale(1.05); }
+        .game-card.flipped { background:var(--cream); color:var(--forest-dark); }
+        .game-card.matched { background:rgba(122,173,106,.28); border-color:var(--accent); }
+        .game-stats { display:flex; justify-content:center; gap:48px; font-family:'Crimson Text',serif; font-size:16px; }
+        .game-stat { display:flex; flex-direction:column; align-items:center; gap:7px; }
+        .gsv { font-family:'Italiana',serif; font-size:34px; }
+        .reset-btn { margin-top:28px; padding:13px 38px; background:transparent; border:1.5px solid var(--cream); color:var(--cream); font-family:'Crimson Text',serif; font-size:15px; cursor:pointer; transition:all .3s; letter-spacing:2px; }
+        .reset-btn:hover { background:var(--cream); color:var(--forest-dark); }
+
+        /* ── CONTACT ── */
+        .contact-wrap { max-width:860px; margin:0 auto; text-align:center; }
+        .contact-title { font-family:'Italiana',serif; font-size:clamp(46px,7vw,108px); line-height:1.05; margin-bottom:36px; }
+        .contact-sub { font-family:'Playfair Display',serif; font-size:clamp(17px,2.3vw,26px); font-style:italic; margin-bottom:55px; color:var(--sketch-gray); }
+        .contact-links { display:flex; justify-content:center; gap:18px; flex-wrap:wrap; }
+        .contact-link { padding:17px 42px; background:var(--forest); color:var(--cream); text-decoration:none; font-family:'Crimson Text',serif; font-size:16px; transition:color .3s; position:relative; overflow:hidden; letter-spacing:1px; }
+        .contact-link::before { content:''; position:absolute; top:50%; left:50%; width:0; height:0; background:var(--cream); border-radius:50%; transform:translate(-50%,-50%); transition:width .5s,height .5s; }
+        .contact-link:hover::before { width:500px; height:500px; }
+        .contact-link:hover { color:var(--forest); }
+        .contact-link span { position:relative; z-index:1; }
+        .contact-detail { font-family:'Crimson Text',serif; font-size:16px; color:var(--sketch-gray); margin-top:36px; line-height:2.1; }
+
+        /* ── FOOTER ── */
+        .footer { background:var(--forest-dark); padding:56px 44px; text-align:center; border-top:1px solid rgba(255,254,242,.12); }
+        .footer-text { font-family:'Crimson Text',serif; font-size:14px; opacity:.55; }
+        .footer-sig { font-family:'Italiana',serif; font-size:26px; margin:14px 0 8px; }
+
+        /* ── DIVIDER ── */
+        .divider-line { width:60px; height:1px; background:var(--forest); opacity:.3; margin:0 auto 60px; }
+
+        @media (max-width:768px) {
+            .nav-links { display:none; }
+            .contact-links { flex-direction:column; }
+            .contact-link { text-align:center; }
+            .game-board { grid-template-columns:repeat(3,1fr); max-width:300px; }
+            .network-grid { grid-template-columns:1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── OPENING ── -->
+<div class="opening-screen" id="openingScreen">
+    <div class="open-eyebrow">AI Automation · GTM Engineering · Trusted Network</div>
+    <div class="open-name">Vaishnavi<br>Rathod</div>
+    <div class="open-title">I see broken processes. I build things that fix them.</div>
+    <button class="enter-btn" onclick="document.getElementById('openingScreen').classList.add('hidden')"><span>Enter</span></button>
+</div>
+
+<!-- ── SKETCH BACKGROUND ── -->
+<div class="sketch-container">
+    <svg class="sk" style="top:9%;right:11%;animation-delay:0s" width="115" height="110" viewBox="0 0 115 110">
+        <rect x="18" y="20" width="80" height="52" rx="2" stroke-dasharray="3,3"/>
+        <line x1="34" y1="38" x2="34" y2="55"/><line x1="54" y1="30" x2="54" y2="55"/><line x1="74" y1="36" x2="74" y2="55" stroke-width="2.5"/>
+        <path d="M28 35 L40 26 L52 33 L64 23 L80 30" stroke-width="1.8" stroke-dasharray="2,2"/>
+        <rect x="18" y="72" width="80" height="7" rx="2"/><rect x="46" y="79" width="22" height="11" rx="1" stroke-dasharray="2,2"/>
+    </svg>
+    <svg class="sk" style="top:24%;left:7%;animation-delay:-4s" width="108" height="88" viewBox="0 0 108 88">
+        <ellipse cx="54" cy="44" rx="38" ry="28" stroke-dasharray="3,3"/>
+        <circle cx="34" cy="34" r="5" stroke-dasharray="1,1"/><circle cx="54" cy="27" r="5" stroke-dasharray="1,1"/><circle cx="74" cy="34" r="5" stroke-dasharray="1,1"/>
+        <line x1="34" y1="34" x2="54" y2="27" stroke-width="1.5"/><line x1="54" y1="27" x2="74" y2="34" stroke-width="1.5"/>
+        <path d="M18 54 Q54 78 90 54" stroke-width="1.5" stroke-dasharray="2,2"/>
+    </svg>
+    <svg class="sk" style="top:44%;right:5%;animation-delay:-8s" width="96" height="112" viewBox="0 0 96 112">
+        <rect x="22" y="14" width="52" height="72" rx="2" stroke-width="2"/>
+        <path d="M22 14 L28 20 L28 86 L22 86 Z" stroke-width="1.5"/>
+        <circle cx="17" cy="29" r="3"/><circle cx="17" cy="44" r="3"/><circle cx="17" cy="59" r="3"/><circle cx="17" cy="74" r="3"/>
+        <line x1="33" y1="32" x2="64" y2="32" stroke-dasharray="2,2"/><line x1="33" y1="44" x2="64" y2="44" stroke-dasharray="2,2"/>
+        <line x1="33" y1="56" x2="58" y2="56" stroke-dasharray="2,2"/><line x1="33" y1="68" x2="60" y2="68" stroke-dasharray="2,2"/>
+    </svg>
+    <svg class="sk" style="bottom:24%;left:5%;animation-delay:-12s" width="92" height="78" viewBox="0 0 92 78">
+        <path d="M8 64 L18 64 L18 44 L28 44 L28 64 L38 64 L38 28 L48 28 L48 64 L58 64 L58 36 L68 36 L68 64 L78 64" stroke-width="2.5" fill="none"/>
+        <line x1="8" y1="64" x2="83" y2="64" stroke-width="2"/><line x1="8" y1="64" x2="8" y2="12" stroke-width="2"/>
+    </svg>
+    <svg class="sk" style="top:58%;left:19%;animation-delay:-6s" width="88" height="88" viewBox="0 0 88 88">
+        <circle cx="44" cy="44" r="28" stroke-dasharray="4,4"/><circle cx="44" cy="44" r="18" stroke-dasharray="3,3"/>
+        <circle cx="44" cy="44" r="9" stroke-dasharray="2,2"/><circle cx="44" cy="44" r="2.5" fill="var(--cream)" stroke="none"/>
+        <line x1="44" y1="14" x2="44" y2="6" stroke-width="2"/><line x1="68" y1="26" x2="74" y2="20" stroke-width="2"/>
+    </svg>
+    <svg class="sk" style="bottom:14%;right:17%;animation-delay:-10s" width="102" height="78" viewBox="0 0 102 78">
+        <rect x="14" y="22" width="74" height="44" rx="3" stroke-width="2" stroke-dasharray="2,2"/>
+        <path d="M14 22 L51 47 L88 22" stroke-width="2"/>
+        <path d="M14 66 L36 46" stroke-width="1.5"/><path d="M88 66 L66 46" stroke-width="1.5"/>
+    </svg>
+    <svg class="sk" style="top:14%;left:29%;animation-delay:-14s" width="82" height="98" viewBox="0 0 82 98">
+        <circle cx="41" cy="33" r="23" stroke-dasharray="3,3" stroke-width="2"/>
+        <rect x="32" y="52" width="18" height="21" rx="2" stroke-width="2"/>
+        <line x1="41" y1="12" x2="41" y2="5" stroke-width="2"/>
+        <line x1="20" y1="24" x2="14" y2="18" stroke-width="1.5"/><line x1="62" y1="24" x2="68" y2="18" stroke-width="1.5"/>
+        <text x="41" y="62" font-family="Arial" font-size="8" fill="var(--cream)" text-anchor="middle">n8n</text>
+    </svg>
+    <svg class="sk" style="bottom:34%;right:28%;animation-delay:-16s" width="88" height="98" viewBox="0 0 88 98">
+        <path d="M18 78 L18 33 Q18 23 28 18 L54 18 Q64 23 64 33 L64 48 Q64 63 48 68 L18 78 Z" stroke-width="2" stroke-dasharray="2,2"/>
+        <circle cx="41" cy="40" r="8" stroke-dasharray="1,1"/>
+    </svg>
+    <svg class="sk" style="top:72%;right:8%;animation-delay:-18s" width="95" height="82" viewBox="0 0 95 82">
+        <rect x="12" y="14" width="70" height="48" rx="2" stroke-width="2"/>
+        <line x1="12" y1="26" x2="82" y2="26" stroke-width="1.5"/>
+        <line x1="28" y1="14" x2="28" y2="26"/><line x1="66" y1="14" x2="66" y2="26"/>
+        <rect x="18" y="32" width="10" height="10" stroke-dasharray="1,1"/><rect x="32" y="32" width="10" height="10" stroke-dasharray="1,1"/>
+        <rect x="46" y="32" width="10" height="10" stroke-dasharray="1,1"/><rect x="60" y="32" width="10" height="10" stroke-dasharray="1,1"/>
+        <rect x="18" y="46" width="10" height="10" stroke-dasharray="1,1"/><rect x="32" y="46" width="10" height="10" stroke-dasharray="1,1"/>
+    </svg>
+</div>
+
+<!-- ── NAV ── -->
+<nav class="nav">
+    <div class="nav-logo">VR</div>
+    <div class="nav-links">
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#network" class="nav-link">Full Studio</a>
+        <a href="#skills" class="nav-link">Toolkit</a>
+        <a href="#contact" class="nav-link">Hire Me</a>
+    </div>
+</nav>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="content-wrapper">
+
+    <!-- Hero -->
+    <div class="chapter">
+        <div class="chapter-num">00</div>
+        <div>
+            <h1 class="chapter-title">I build systems<br>that <span class="hl">run themselves</span></h1>
+            <p class="chapter-sub">AI automation, GTM pipelines, and workflow engineering — plus a trusted network for everything else your business needs.</p>
+        </div>
+    </div>
+
+    <!-- Core Services -->
+    <div class="light-section" id="services">
+        <div class="container">
+            <h2 class="section-intro">"Every broken workflow is a system waiting to be built."</h2>
+            <div class="divider-line"></div>
+            <h2 class="section-big-title" style="margin-bottom:16px;">What I Build</h2>
+            <p style="text-align:center;font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:var(--sketch-gray);margin-bottom:55px;">These are the things I personally design, build, and ship — end to end.</p>
+            <div class="services-grid">
+                <div class="svc-card">
+                    <div class="svc-icon"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="var(--forest)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="20" r="4.5"/><path d="M20 4v4M20 32v4M4 20h4M32 20h4M8.7 8.7l2.8 2.8M28.5 28.5l2.8 2.8M8.7 31.3l2.8-2.8M28.5 11.5l2.8-2.8"/><circle cx="20" cy="20" r="11" stroke-dasharray="3 2.5" opacity=".4"/></svg></div>
+                    <div class="svc-name">Workflow Automation</div>
+                    <div class="svc-desc">End-to-end automation of repetitive business processes — data ingestion, approvals, reporting, notifications. Built in n8n, Zapier, or Python. Runs without you after handoff.</div>
+                    <div class="svc-tools"><span class="tool-tag">n8n</span><span class="tool-tag">Zapier</span><span class="tool-tag">Python</span><span class="tool-tag">APIs</span></div>
+                </div>
+                <div class="svc-card">
+                    <div class="svc-icon"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="var(--forest)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="20" r="14"/><circle cx="20" cy="20" r="9"/><circle cx="20" cy="20" r="4"/><line x1="34" y1="6" x2="20" y2="20"/><polyline points="28 6 34 6 34 12"/></svg></div>
+                    <div class="svc-name">GTM Pipeline Build</div>
+                    <div class="svc-desc">Full outbound + inbound lead pipeline — funding-round triggered prospecting, Clay enrichment, outbound sequencing, inbound AI qualification. Built from scratch, 0→1.</div>
+                    <div class="svc-tools"><span class="tool-tag">Clay</span><span class="tool-tag">n8n</span><span class="tool-tag">HubSpot</span><span class="tool-tag">LinkedIn</span></div>
+                </div>
+                <div class="svc-card">
+                    <div class="svc-icon"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="var(--forest)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="14" width="14" height="12" rx="3"/><rect x="22" y="14" width="14" height="12" rx="3"/><line x1="18" y1="20" x2="22" y2="20"/><path d="M8 20h2M26 20h2" opacity=".5"/><path d="M4 10h14M22 10h14" opacity=".25" stroke-dasharray="2 2"/></svg></div>
+                    <div class="svc-name">POS & ERP Integration</div>
+                    <div class="svc-desc">Automated data pipelines from Oracle, Lightspeed, Sapaad, and other enterprise POS/ERP systems. Real-time reporting with zero manual extraction — my specialist niche.</div>
+                    <div class="svc-tools"><span class="tool-tag">Oracle</span><span class="tool-tag">Lightspeed</span><span class="tool-tag">Sapaad</span><span class="tool-tag">ETL</span></div>
+                </div>
+                <div class="svc-card">
+                    <div class="svc-icon"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="var(--forest)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4h14l8 8v24H10z"/><path d="M24 4v8h8" opacity=".5"/><line x1="15" y1="20" x2="26" y2="20"/><line x1="15" y1="26" x2="22" y2="26"/><path d="M28 18l2 2-2 2M32 20h2" stroke-width="1.4"/></svg></div>
+                    <div class="svc-name">AI Document Processing</div>
+                    <div class="svc-desc">OCR + ML pipelines that read, extract, normalise, and route data from invoices, contracts, and forms automatically. 95% accuracy, 85% less manual entry.</div>
+                    <div class="svc-tools"><span class="tool-tag">OCR</span><span class="tool-tag">ML</span><span class="tool-tag">Python</span><span class="tool-tag">Pandas</span></div>
+                </div>
+                <div class="svc-card">
+                    <div class="svc-icon"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="var(--forest)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="22" width="7" height="12" rx="1"/><rect x="17" y="14" width="7" height="20" rx="1"/><rect x="28" y="8" width="7" height="26" rx="1"/><line x1="4" y1="36" x2="38" y2="36"/><path d="M7 20l10-8 10 4 8-10" stroke-dasharray="2 2" opacity=".5"/></svg></div>
+                    <div class="svc-name">GTM Analytics & Dashboards</div>
+                    <div class="svc-desc">MQL→SQL funnel dashboards, pipeline tracking, and engagement reporting connected to your live data. Built in Tableau or Power BI — insights you can act on.</div>
+                    <div class="svc-tools"><span class="tool-tag">Tableau</span><span class="tool-tag">Power BI</span><span class="tool-tag">SQL</span><span class="tool-tag">Google Analytics</span></div>
+                </div>
+                <div class="svc-card">
+                    <div class="svc-icon"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="var(--forest)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6a14 14 0 0 1 14 14"/><path d="M34 20a14 14 0 0 1-14 14"/><path d="M20 34a14 14 0 0 1-14-14"/><path d="M6 20a14 14 0 0 1 14-14"/><polyline points="34 6 34 14 26 14"/><circle cx="20" cy="20" r="4"/></svg></div>
+                    <div class="svc-name">Automation Retainer</div>
+                    <div class="svc-desc">Your embedded automation partner. I build, maintain, and iterate on your systems monthly. New workflows, error monitoring, and strategy sessions included.</div>
+                    <div class="svc-tools"><span class="tool-tag">Ongoing</span><span class="tool-tag">Priority Access</span><span class="tool-tag">Full Stack</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Network / Full Studio -->
+    <div class="network-banner" id="network">
+        <div class="network-eyebrow">Full Service · Trusted Partners · Transparent</div>
+        <h2 class="network-title">Need More Than Automation?</h2>
+        <p class="network-body">For everything beyond my core stack, I work with a trusted network of vetted specialists — designers, developers, animators, and brand studios. You get one point of contact, one conversation, and a team that delivers. I project manage everything so you don't have to coordinate anyone.</p>
+        <div class="network-grid">
+            <div class="network-card">
+                <div class="network-card-icon"><svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="var(--cream)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="17" r="13"/><path d="M4 17h26"/><path d="M17 4c-4 3.5-6 8-6 13s2 9.5 6 13"/><path d="M17 4c4 3.5 6 8 6 13s-2 9.5-6 13"/></svg></div>
+                <div class="network-card-name">Web & App Development</div>
+                <div class="network-card-desc">Full websites, web apps, and SaaS products — from landing pages to complex platforms. Frontend, backend, or full stack.</div>
+            </div>
+            <div class="network-card">
+                <div class="network-card-icon"><svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="var(--cream)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="17" r="12"/><circle cx="11" cy="13" r="2.5"/><circle cx="23" cy="13" r="2.5"/><circle cx="17" cy="24" r="2.5"/><path d="M11 13s0 8 6 8 6-8 6-8" opacity=".4"/></svg></div>
+                <div class="network-card-name">UI/UX Design & Branding</div>
+                <div class="network-card-desc">Brand identity, design systems, product UI, and user experience design. From logo to full product interface.</div>
+            </div>
+            <div class="network-card">
+                <div class="network-card-icon"><svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="var(--cream)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="26" height="18" rx="2"/><polyline points="4 12 30 12"/><line x1="11" y1="8" x2="11" y2="12"/><line x1="17" y1="8" x2="17" y2="12"/><line x1="23" y1="8" x2="23" y2="12"/><polygon points="14 18 22 22 14 26" opacity=".6"/></svg></div>
+                <div class="network-card-name">Animation & Video Production</div>
+                <div class="network-card-desc">Explainer videos, motion graphics, product demos, and social content. Scripted, produced, and delivered.</div>
+            </div>
+            <div class="network-card">
+                <div class="network-card-icon"><svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="var(--cream)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="3" width="14" height="28" rx="3"/><line x1="10" y1="8" x2="24" y2="8"/><line x1="10" y1="26" x2="24" y2="26"/><circle cx="17" cy="29" r="1.2" fill="var(--cream)" stroke="none"/></svg></div>
+                <div class="network-card-name">Mobile App Development</div>
+                <div class="network-card-desc">iOS and Android apps — native or cross-platform. Built by specialist developers, coordinated by me.</div>
+            </div>
+        </div>
+        <p class="network-note">I'm always upfront: these services are delivered by specialists in my network, not by me personally — but I own the outcome and manage every detail from brief to delivery.</p>
+    </div>
+
+    <!-- Skills / Toolkit -->
+    <div class="off-section" id="skills">
+        <div class="container-lg">
+            <h2 class="section-big-title">Toolkit</h2>
+            <div class="skills-grid">
+                <div class="skill-box">
+                    <div class="skill-cat">GTM & Growth</div>
+                    <div class="skill-items">
+                        <span class="skill-item">Clay</span><span class="skill-item">n8n</span><span class="skill-item">Zapier</span>
+                        <span class="skill-item">Gleap</span><span class="skill-item">Gong</span><span class="skill-item">Lavender AI</span>
+                        <span class="skill-item">Qualified</span><span class="skill-item">Outbound sequencing</span><span class="skill-item">Lead enrichment</span>
+                    </div>
+                </div>
+                <div class="skill-box">
+                    <div class="skill-cat">AI & Automation</div>
+                    <div class="skill-items">
+                        <span class="skill-item">OCR</span><span class="skill-item">Machine Learning</span><span class="skill-item">NLP</span>
+                        <span class="skill-item">AI Agents</span><span class="skill-item">Agentic Workflows</span>
+                        <span class="skill-item">Predictive Analytics</span><span class="skill-item">ETL Pipelines</span><span class="skill-item">Databricks</span>
+                    </div>
+                </div>
+                <div class="skill-box">
+                    <div class="skill-cat">Technical</div>
+                    <div class="skill-items">
+                        <span class="skill-item">Python</span><span class="skill-item">SQL</span><span class="skill-item">JavaScript</span>
+                        <span class="skill-item">Pandas</span><span class="skill-item">Scikit-learn</span><span class="skill-item">NumPy</span>
+                        <span class="skill-item">APIs</span><span class="skill-item">MySQL</span><span class="skill-item">Git</span>
+                    </div>
+                </div>
+                <div class="skill-box">
+                    <div class="skill-cat">POS & ERP Systems</div>
+                    <div class="skill-items">
+                        <span class="skill-item">Oracle</span><span class="skill-item">Lightspeed</span><span class="skill-item">Sapaad</span>
+                        <span class="skill-item">PMS Integration</span><span class="skill-item">Data Normalisation</span><span class="skill-item">Batch Processing</span>
+                    </div>
+                </div>
+                <div class="skill-box">
+                    <div class="skill-cat">Analytics & BI</div>
+                    <div class="skill-items">
+                        <span class="skill-item">Tableau</span><span class="skill-item">Power BI</span><span class="skill-item">Google Analytics</span>
+                        <span class="skill-item">HubSpot</span><span class="skill-item">Zoho CRM</span><span class="skill-item">A/B Testing</span>
+                        <span class="skill-item">Customer Segmentation</span><span class="skill-item">Statistical Modelling</span>
+                    </div>
+                </div>
+                <div class="skill-box">
+                    <div class="skill-cat">Certifications</div>
+                    <div class="skill-items">
+                        <span class="skill-item">Harvard CS50</span>
+                        <span class="skill-item">Product Analytics (PAC)™</span>
+                        <span class="skill-item">AI Micro-Cert (AIC)™</span>
+                        <span class="skill-item">B.Tech CSE · VIT · 8.18 CGPA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Metrics -->
+    <div class="dark-section">
+        <div class="metrics-content">
+            <h2 class="metrics-big">Numbers that<br>tell the truth</h2>
+            <p class="metrics-quote">"I don't build workflows. I build outcomes. Every number below is a process that used to require a person — and now doesn't."</p>
+            <div class="metrics-row">
+                <div><span class="metric-num">1,400%</span><span class="metric-lbl">Client Expansion</span></div>
+                <div><span class="metric-num">95%</span><span class="metric-lbl">OCR Accuracy</span></div>
+                <div><span class="metric-num">500+</span><span class="metric-lbl">Invoices/month</span></div>
+                <div><span class="metric-num">85%</span><span class="metric-lbl">Less Manual Entry</span></div>
+                <div><span class="metric-num">32→1</span><span class="metric-lbl">Person-hours daily</span></div>
+                <div><span class="metric-num">0→1</span><span class="metric-lbl">Builder Mindset</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game -->
+    <div class="mid-section">
+        <div class="game-container">
+            <h2 class="game-title">Match the Stack</h2>
+            <p class="game-desc">Can you match my tools? Flip the cards to find pairs.</p>
+            <div class="game-board" id="gameBoard"></div>
+            <div class="game-stats">
+                <div class="game-stat"><span class="gsv" id="moves">0</span><span>Moves</span></div>
+                <div class="game-stat"><span class="gsv" id="matches">0</span><span>Matches</span></div>
+            </div>
+            <button class="reset-btn" onclick="resetGame()">Shuffle</button>
+        </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="light-section" id="contact">
+        <div class="contact-wrap">
+            <h2 class="contact-title">Let's fix<br>something<br>broken</h2>
+            <p class="contact-sub">Tell me what your team does manually that shouldn't be. I'll tell you how to automate it — and who to call for everything else.</p>
+            <div class="contact-links">
+                <a href="mailto:vaishnaviyrathod069@gmail.com" class="contact-link"><span>Email Me</span></a>
+                <a href="https://linkedin.com/in/vaishnavirathod" class="contact-link" target="_blank"><span>LinkedIn</span></a>
+                <a href="#" class="contact-link"><span>Book a Call</span></a>
+            </div>
+            <p class="contact-detail">
+                vaishnaviyrathod069@gmail.com<br>
+                Based in Toronto · Available globally · Fast turnaround
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p class="footer-text">Built with n8n in my head and code in my hands</p>
+        <p class="footer-sig">Vaishnavi Rathod</p>
+        <p class="footer-text">© 2025 · AI Automation · GTM Engineering · Trusted Studio Network</p>
+    </div>
+
+</div>
+
+<script>
+    // Scroll parallax
+    window.addEventListener('scroll', () => {
+        const s = window.pageYOffset;
+        document.querySelectorAll('.sk').forEach((el, i) => {
+            const speed = ((i % 4) + 1) * 0.35;
+            el.style.transform = `translateY(${s * speed * 0.07}px) rotate(${s * 0.025}deg)`;
+        });
+    });
+
+    // Mouse parallax
+    document.addEventListener('mousemove', e => {
+        document.querySelectorAll('.sk').forEach((el, i) => {
+            const sp = 0.015 + (i % 3) * 0.008;
+            const x = (e.clientX - window.innerWidth / 2) * sp;
+            const y = (e.clientY - window.innerHeight / 2) * sp;
+            el.style.transform = `translate(${x}px,${y}px)`;
+        });
+    });
+
+    // Fade-in on scroll
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.style.opacity = '1';
+                e.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -35px 0px' });
+
+    document.querySelectorAll('.svc-card,.skill-box,.network-card,.pricing-card').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(26px)';
+        el.style.transition = 'opacity .65s ease, transform .65s ease';
+        obs.observe(el);
+    });
+
+    // 3D tilt
+    document.querySelectorAll('.svc-card,.network-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const r = card.getBoundingClientRect();
+            const rx = (e.clientY - r.top - r.height / 2) / 22;
+            const ry = (r.width / 2 - (e.clientX - r.left)) / 22;
+            card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-8px)`;
+        });
+        card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    });
+
+    // Memory game
+    const tools = ['n8n','Clay','OCR','ETL','SQL','API','GTM','AI'];
+    let deck = [...tools,...tools], flipped = [], matched = 0, moves = 0, lock = false;
+
+    function shuffle(a) {
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
+    function createGameBoard() {
+        const b = document.getElementById('gameBoard');
+        b.innerHTML = '';
+        deck = shuffle([...tools,...tools]);
+        deck.forEach((t, idx) => {
+            const c = document.createElement('div');
+            c.className = 'game-card';
+            c.dataset.tool = t;
+            c.dataset.idx = idx;
+            c.addEventListener('click', flipCard);
+            b.appendChild(c);
+        });
+    }
+
+    function flipCard() {
+        if (lock || this.classList.contains('flipped') || this.classList.contains('matched')) return;
+        this.classList.add('flipped');
+        this.textContent = this.dataset.tool;
+        flipped.push(this);
+        if (flipped.length === 2) {
+            moves++;
+            document.getElementById('moves').textContent = moves;
+            lock = true;
+            const [a, b] = flipped;
+            if (a.dataset.tool === b.dataset.tool) {
+                a.classList.add('matched'); b.classList.add('matched');
+                matched++;
+                document.getElementById('matches').textContent = matched;
+                flipped = []; lock = false;
+                if (matched === tools.length) setTimeout(() => alert(`🎉 All matched in ${moves} moves!`), 300);
+            } else {
+                setTimeout(() => {
+                    a.classList.remove('flipped'); b.classList.remove('flipped');
+                    a.textContent = ''; b.textContent = '';
+                    flipped = []; lock = false;
+                }, 900);
+            }
+        }
+    }
+
+    function resetGame() {
+        matched = 0; moves = 0; flipped = []; lock = false;
+        document.getElementById('moves').textContent = '0';
+        document.getElementById('matches').textContent = '0';
+        createGameBoard();
+    }
+
+    createGameBoard();
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            e.preventDefault();
+            const t = document.querySelector(a.getAttribute('href'));
+            if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+</script>
+</body>
+</html>
